@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :categories
   resources :locations
   resources :load_data
 

@@ -16,7 +16,7 @@ class LocationsController < ApplicationController
   # POST /locations
   def create
     @location = Location.new(location_params)
-
+    byebug
     if @location.save
       render json: @location, status: :created, location: @location
     else
