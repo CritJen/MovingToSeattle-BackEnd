@@ -4,7 +4,7 @@ class CreateLocations < ActiveRecord::Migration[5.2]
       t.string :name
       t.float :latitude
       t.float :longitude
-      t.string :tags
+      t.string :tags, array: true, default: []
       t.integer :category_id
 
       t.timestamps
