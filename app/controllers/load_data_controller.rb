@@ -15,7 +15,7 @@ class LoadDataController < ApplicationController
     # end
 
     urls = [{url: 'https://api.yelp.com/v3/businesses/search?location=seattle&categories=restaurants, All&limit=50', id: 1, times: 19},
-     {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=active, All&limit=50", id: 2, times: 3}, {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=arts, All&limit=50", id: 3, times: 5}]
+     {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=active, All&limit=50", id: 2, times: 3}, {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=arts, All&limit=50", id: 3, times: 5}, {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=beautysvc, All&limit=50", id: 4, times: 3}, {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=health, All&limit=50", id: 5, times: 3}]
 
    def self.createLocation(url, id)
     data = JSON.parse(RestClient.get(url, headers=@@headers_hash))
