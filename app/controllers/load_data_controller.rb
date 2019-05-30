@@ -61,7 +61,13 @@ class LoadDataController < ApplicationController
         bathroom = property["bathroom"]
         split_address = property["address"].split("<br/>")
         address = split_address.first
-        newProperty = Property.find_or_create_by(latitude: latitude, longitude: longitude, name: name, bedroom: bedroom, bathroom: bathroom, address: address, monthly_rent: monthly_rent)
+        link_id = property["id"]
+        if property["neighborhood"].empty?
+            neighborhood = split_address.last.split(",").first.split(" ").join("-")
+        else
+            neighborhood = property["neighborhood"].split(":").last.split(" ").join("-")
+        end
+        newProperty = Property.find_or_create_by(latitude: latitude, longitude: longitude, name: name, bedroom: bedroom, bathroom: bathroom, address: address, monthly_rent: monthly_rent, neighborhood: neighborhood, link_id: link_id)
     end
 
 
