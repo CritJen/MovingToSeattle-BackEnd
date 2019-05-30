@@ -14,7 +14,8 @@ class LoadDataController < ApplicationController
     #     urls << {url: "https://api.yelp.com/v3/businesses/search?location=seattle&categories=#{term}, All"}
     # end
 
-    urls = [{url: 'https://api.yelp.com/v3/businesses/search?location=seattle&categories=restaurants, All', id: 1}, {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=active, All", id: 2}, {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=arts, All", id: 3}]
+    urls = [{url: 'https://api.yelp.com/v3/businesses/search?location=seattle&categories=restaurants, All&limit=50', id: 1, times: 19},
+     {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=active, All&limit=50", id: 2, times: 3}, {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=arts, All&limit=50", id: 3, times: 5}]
 
    def self.createLocation(url, id)
     data = JSON.parse(RestClient.get(url, headers=@@headers_hash))
@@ -27,14 +28,21 @@ class LoadDataController < ApplicationController
         biz["categories"].each do |cat|
             tags << cat["alias"]
         end
-    
-        newLocation = Location.create(latitude: latitude, longitude: longitude, name: name, tags: tags, category_id: id)
+        if !latitude.nil? && !longitude.nil?
+        newLocation = Location.find_or_create_by(latitude: latitude, longitude: longitude, name: name, tags: tags, category_id: id)
+        end
     end
    end
 
 
    urls.each do |category|
-    self.createLocation(category[:url], category[:id])
+        offset = 0
+        times = category[:times]
+        times.times do
+            url = category[:url] + "&offset=#{offset}"
+            self.createLocation(url, category[:id])
+            offset += 50
+        end
     end
 
    
@@ -43,12 +51,17 @@ class LoadDataController < ApplicationController
         latitude = property["latitude"]
         longitude = property["longitude"]
         name = property["name"]
-        rent = property["monthly_rent"].split("to")
-        monthly_rent = rent[0].split(//).map {|x| x[/\d+/]}.compact.join("").to_i
+        if property["monthly_rent"]
+            rent = property["monthly_rent"].split("to")
+            monthly_rent = rent[0].split(//).map {|x| x[/\d+/]}.compact.join("").to_i
+        else 
+            monthly_rent = "unknown"
+        end
         bedroom = property["bedroom"]
         bathroom = property["bathroom"]
-        address = property["address"]
-        newProperty = Property.create(latitude: latitude, longitude: longitude, name: name, bedroom: bedroom, bathroom: bathroom, address: address, monthly_rent: monthly_rent)
+        split_address = property["address"].split("<br/>")
+        address = split_address.first
+        newProperty = Property.find_or_create_by(latitude: latitude, longitude: longitude, name: name, bedroom: bedroom, bathroom: bathroom, address: address, monthly_rent: monthly_rent)
     end
 
 
