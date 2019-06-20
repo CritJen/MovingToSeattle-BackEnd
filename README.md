@@ -1,25 +1,24 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Setting Up The Backend
 
-Things you may want to cover:
++ Clone the repository
+```
+git@github.com:CritJen/MovingToSeattle-BackEnd.git
+```
++ Run bundle install to install the required Gems
+```
+bundle install
+```
++ Create and seed the database
+```
+rails db:reseed
+```
++ Start your local server
+```
+rails server
+```
 
-* Ruby version
+### Get updated data
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# MovingToSeattle-BackEnd
+To seed the databases with current data simply visit localhost3000/load_data
