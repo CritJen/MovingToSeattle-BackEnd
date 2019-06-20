@@ -28,7 +28,7 @@ rails server
 
 ### Get updated data
 
-To seed the databases with current data simply visit localhost:3000/load_data
+To seed the databases with current data simply visit http://localhost:3000/load_data
 
 ## Next steps
 
