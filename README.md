@@ -33,7 +33,7 @@ rails server
 
 To seed the databases with current data simply visit http://localhost:3000/load_data. This will retrieve data from various third-party data sources.
 
-## Next steps
+### Next steps
 
 Now navigate to the repository for the frontend to complete set up: https://github.com/CritJen/MovingtoSeattle
 
