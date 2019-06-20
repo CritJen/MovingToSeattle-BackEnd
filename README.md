@@ -39,8 +39,8 @@ Now navigate to the repository for the frontend to complete set up: https://gith
 
 ### Built With
 
-[Rails](https://rubyonrails.org/)
-[PostgreSQL](https://www.postgresql.org/)
+[Rails](https://rubyonrails.org/) - MVC framework built in [Ruby](https://www.ruby-lang.org/en/)\
+[PostgreSQL](https://www.postgresql.org/) - Open source relational database server
 
 ### Author
 
