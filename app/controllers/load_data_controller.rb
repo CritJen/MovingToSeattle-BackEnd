@@ -1,18 +1,10 @@
 class LoadDataController < ApplicationController
 
-    # yelp_url = 'https://api.yelp.com/v3/businesses/search?location=seattle'
     yelp_url = "https://api.yelp.com/v3/businesses/search?location=seattle"
-    zillow_url = "https://www.seattlerentals.com/map_listings?_=1559063101668"
+    properties_url = "https://www.seattlerentals.com/map_listings?_=1559063101668"
 
     @@headers_hash = {Authorization: 'Bearer 6Yw7w9D_uRNibUpcvPZu8mQ7QTMci8UEiglW7OgOovHlcRL4pG2GFiYZaU9CFwqKU0Di8UmdnHa-RUEOt-xuRpfGZtEwHJfDmPaS2MbiH8g5FlPKyRTT95pCxtPdXHYx'}
 
-    # urls = []
-
-    # search_terms = ["restaurants", "active", "arts"]
-
-    # search_terms.each do |term|
-    #     urls << {url: "https://api.yelp.com/v3/businesses/search?location=seattle&categories=#{term}, All"}
-    # end
 
     urls = [{url: 'https://api.yelp.com/v3/businesses/search?location=seattle&categories=restaurants, All&limit=50', id: 1, times: 19},
      {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=active, All&limit=50", id: 2, times: 3}, {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=arts, All&limit=50", id: 3, times: 5}, {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=beautysvc, All&limit=50", id: 4, times: 3}, {url:"https://api.yelp.com/v3/businesses/search?location=seattle&categories=health, All&limit=50", id: 5, times: 3}]
@@ -34,11 +26,11 @@ class LoadDataController < ApplicationController
     end
    end
 
-
+#Iterates over the api endpoints the prescribed number of times to seed data
    urls.each do |category|
         offset = 0
-        times = category[:times]
-        times.times do
+        rounds = category[:times]
+        rounds.times do
             url = category[:url] + "&offset=#{offset}"
             self.createLocation(url, category[:id])
             offset += 50
@@ -46,7 +38,7 @@ class LoadDataController < ApplicationController
     end
 
    
-   propertyData = JSON.parse(RestClient.get(zillow_url))
+   propertyData = JSON.parse(RestClient.get(properties_url))
     propertyData["ads"].each do |property|
         latitude = property["latitude"]
         longitude = property["longitude"]
